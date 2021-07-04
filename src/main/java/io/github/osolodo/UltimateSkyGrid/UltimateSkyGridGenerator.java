@@ -1,6 +1,5 @@
 package io.github.osolodo.UltimateSkyGrid;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.BlockPopulator;
@@ -65,7 +64,10 @@ public class UltimateSkyGridGenerator extends ChunkGenerator {
 
     public List<BlockPopulator> getDefaultPopulators(World world) {
 
-        return Arrays.asList(new BlockPopulator[]{new UltimateSkyGridPopulator()});
+        return Arrays.asList(
+                new UltimateSkyGridAdvancedBlockGeneration(),
+                new UltimateSkyGridEndPortalPopulator()
+        );
     }
 
     public Material getRandBlock(World world, Random random, boolean allBlocks) {

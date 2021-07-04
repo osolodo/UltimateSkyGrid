@@ -5,10 +5,8 @@ import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.block.Chest;
-import org.bukkit.block.CreatureSpawner;
+import org.bukkit.block.*;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.entity.EntityType;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.loot.LootTable;
@@ -16,7 +14,7 @@ import org.bukkit.loot.LootTables;
 
 import java.util.Random;
 
-public class UltimateSkyGridPopulator extends BlockPopulator {
+public class UltimateSkyGridAdvancedBlockGeneration extends BlockPopulator {
 
     private static final Material[] logVariantsNorm = {
             Material.ACACIA_LOG,
@@ -57,6 +55,23 @@ public class UltimateSkyGridPopulator extends BlockPopulator {
             Material.CORNFLOWER,
             Material.LILY_OF_THE_VALLEY,
             Material.SUGAR_CANE,
+            Material.SUNFLOWER,
+            Material.LILAC,
+            Material.ROSE_BUSH,
+            Material.PEONY,
+            Material.PEONY,
+            Material.TALL_GRASS,
+            Material.LARGE_FERN,
+    };
+    private static final Material[] bisectedMaterials = {
+            Material.SUNFLOWER,
+            Material.LILAC,
+            Material.ROSE_BUSH,
+            Material.PEONY,
+            Material.PEONY,
+            Material.TALL_GRASS,
+            Material.LARGE_FERN,
+            Material.TALL_SEAGRASS
     };
     private static final LootTables[] normChests = {
             LootTables.ABANDONED_MINESHAFT,
@@ -116,11 +131,30 @@ public class UltimateSkyGridPopulator extends BlockPopulator {
                     if (blk.getType() == Material.CHEST) {
                         populateChest(world, random, blk);
                     } else if (blk.getType() == Material.GRASS_BLOCK) {
-                        blk.getRelative(BlockFace.UP).setType(getPopulating(random, grassPopulatable), false);
+                        Material mat = getPopulating(random, grassPopulatable);
+                        Block bottom = blk.getRelative(BlockFace.UP);
+                        bottom.setType(mat, false);
+                        boolean bisected = bottom.getBlockData() instanceof Bisected;
+                        if (mat == Material.SUGAR_CANE || bisected) {
+                            Block top = blk.getRelative(BlockFace.UP).getRelative(BlockFace.UP);
+                            top.setType(mat, false);
+                            if (bisected) {
+                                Bisected topBlockData = ((Bisected) top.getBlockData());
+                                topBlockData.setHalf(Bisected.Half.TOP);
+                                BlockState topState = top.getState();
+                                topState.setBlockData(topBlockData);
+                                topState.update(false, false);
+                            }
+                        }
                     } else if (blk.getType() == Material.DIRT) {
                         blk.getRelative(BlockFace.UP).setType(getPopulating(random, dirtPopulatable, 2), false);
                     } else if (blk.getType() == Material.SAND) {
-                        blk.getRelative(BlockFace.UP).setType(getPopulating(random, Material.SUGAR_CANE, 10), false);
+                        Block up = blk.getRelative(BlockFace.UP);
+                        Material mat = getPopulating(random, Material.CACTUS, 10);
+                        if (mat != Material.AIR) {
+                            up.setType(mat, false);
+                            up.getRelative(BlockFace.UP).setType(mat, false);
+                        }
                     } else if (blk.getType() == Material.SOUL_SAND) {
                         blk.getRelative(BlockFace.UP).setType(getPopulating(random, Material.NETHER_WART, 10), false);
                     } else if (blk.getType() == Material.SPAWNER) {
