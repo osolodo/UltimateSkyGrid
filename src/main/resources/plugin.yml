@@ -1,13 +1,5 @@
 name: UltimateSkyGrid
-main: com.gmail.labuff.shane.UltimateSkyGrid.UltimateSkyGrid
+main: io.github.osolodo.UltimateSkyGrid.UltimateSkyGrid
 version: 0.2.1
+api-version: 1.17
 load: startup
-commands:
-  usg:
-    description: Use this in front of any UltimateSkyGrid command to get the desired result. IE /usg sethome
-    usage: /usg <arg> Valid <args> <home, sethome>
-permissions:
-  UltimateSkyGrid.home:
-    description: Gives players access to the /usg home command
-  UltimateSkyGrid.sethome:
-    description: Gives players access to the /usg sethome command

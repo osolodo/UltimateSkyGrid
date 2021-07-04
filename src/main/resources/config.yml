@@ -1,4 +1,4 @@
-AllBlocksOneWorld: true          ##set this value to false if you want to only spawn regular blocks in the normal world. (Useful when wanting a Nether or End Skygrid world)
+AllBlocksOneWorld: false          ##set this value to false if you want to only spawn regular blocks in the normal world. (Useful when wanting a Nether or End Skygrid world)
 
 ## 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256 (these are recommended world heights)
 ## These are the numbers used to generate the blocks in the Grid Randomly
@@ -7,7 +7,7 @@ AllBlocksOneWorld: true          ##set this value to false if you want to only s
 ## UniqueBlockProbability: 9997
 ## RareBlockProbability: 9998
 ## UncommonBlockProbability: 9999
-## I have java generate a random number between 0 and 9999. Thats 10,000 integers. So, really what these numbers are doing
+## I have java generate a random number between 0 and 10000(exclusive). So, really what these numbers are doing
 ## is telling the chunk generator to generate a random block from a group of blocks(ie mythic) if the random number is less than
 ## the figure you set here. So, if the random number is 181 it will pick a random block from the rare block set and not the unique block set
 ## (under the default config) because 181 is not less than 181. There is one more group of blocks that is generated that is not listed here.
@@ -15,79 +15,65 @@ AllBlocksOneWorld: true          ##set this value to false if you want to only s
 ## a random number from 4001 to 9999 will spawn an abundant group block.
 
 ReplaceAirWithGlass: false
-Spawn_Max: 500                   ##Default 1000    When the player file is initialized, a random set of spawn coords will be set to their home.
-Spawn_Min: 0                     ##Default 500     These (Max and Min) Set a range for the random coords to be in. Dont use negative numbers! You will break the config.
-Delay: 0                         ##Default 0       This is the delay in seconds for the /usg home command. (Dont use milliseconds)
-World_Name: SkyGrid              ##Default SkyGrid This is the worldname of your skygrid server, this will affect the outcome of the home command.
-World_Height: 128                ##Default = 128   A higher number here will increase the stress on your computer rendering blocks.
-Mythic_Block_Probability: 4      ##Default = 4     Blocks in this group: Diamond Block, Gold Block, Emerald Block, Lapis Block, Enchantment Table, Brewing Stand, Redstone Block, Iron Block
-Unique_Block_Probability: 181    ##Default = 181   Blocks in this group: TNT, Bookshelf, Mycelium, Emerald Ore, Diamond Ore, Mob Spawner, Glowstone, Soul Sand, Quartz Block, Stationary Water, Stationary Lava, Chest
-Rare_Block_Probability: 1801     ##Default = 1801  Blocks in this group: Pumkin, Melon, Redstone Ore, Lapis Ore, Spider Web, Gold Ore, Wool, Obsidian, Quartz Ore, Brick, Nether Brick
-Uncommon_Block_Probability: 4001 ##Default = 4001  Blocks in this group: Mossy Cobble, Iron Ore, Sandstone, Netherrack, Gravel, Clay
-## I'll list the abundant blocks here. ---->       Blocks in this group: Grass, Dirt, Log, Stone, Coal Ore, Sand
-
+World_Height: 128                ##A higher number here will increase the stress on your computer rendering blocks.
+Mythic_Block_Probability: 4
+Unique_Block_Probability: 181
+Rare_Block_Probability: 1801
+Uncommon_Block_Probability: 4001
 ##If AllBlocksOneWorld is true, edit these blockgroup values. If its false scroll down to NormalConfig.
 ##These are the block Id's in each of the 5 groups. You must have at least 1 Id in each group.
 ##Make sure there is only one space in between each Id.
 
 BlockGroups:
-  Mythic: '22 41 42 57 116 117 133 152'
-  Unique: '9 11 46 47 52 54 56 88 89 110 129 155'
-  Rare: '14 21 30 35 45 49 73 86 103 112 153'
-  Uncommon: '13 15 24 48 82 87'
-  Abundant: '1 2 3 12 16 17'
+  Mythic: 'SPONGE PURPUR_BLOCK END_STONE_BRICKS CAULDRON CAKE TNT PISTON REDSTONE_BLOCK BLUE_ICE SEA_LANTERN LILY_PAD EMERALD_ORE LAPIS_ORE DIAMOND_ORE BUDDING_AMETHYST BOOKSHELF HAY_BLOCK SPAWNER PUMPKIN MOSS_BLOCK MELON MYCELIUM'
+  Unique: 'END_STONE PRISMARINE GOLD_ORE REDSTONE_ORE COBWEB WHITE_WOOL BRICKS OBSIDIAN ICE SNOW_BLOCK WHITE_TERRACOTTA LAVA MAGMA_BLOCK NETHER_GOLD_ORE NETHER_QUARTZ_ORE ANCIENT_DEBRIS GLOWSTONE NETHER_BRICKS CRYING_OBSIDIAN'
+  Rare: 'CRIMSON_NYLIUM WARPED_NYLIUM NETHERRACK SOUL_SAND SOUL_SOIL BASALT BLACKSTONE LIGHT_GRAY_CONCRETE CALCITE TUFF DRIPSTONE_BLOCK IRON_ORE COPPER_ORE MOSSY_COBBLESTONE CLAY WATER CHEST'
+  Uncommon: 'GLASS DEEPSLATE ANDESITE RED_SAND GRAVEL COAL_ORE SANDSTONE'
+  Abundant: 'STONE GRANITE DIORITE GRASS_BLOCK DIRT SAND OAK_LOG'
 
-##The plugin generates a random number between 0 and 99 here. If you set Chest_Prob_Mythic to 10 and Chest_Prob_Rare to 20 for instance,
-##the plugin will place a Mythic item in the chest on random numbers 0 - 9, a Rare item on random numbers 10 - 19, and a Normal item from 20 to 99.
+##The plugin generates a random number between 0 and 99 here. If you set Spawn_Prob_Mythic to 10 and Spawn_Prob_Rare to 20 for instance,
+##the plugin will select from the mythic list on random numbers 0 - 9, from the Rare list on random numbers 10 - 19, and the Normal list from 20 to 99.
+Spawn_Prob_Mythic: 10
+Spawn_Prob_Rare: 30
 
-Chest_Prob_Mythic: 2
-Chest_Prob_Rare: 6
-
-##These are the items that will spawn in chests
-##Use this format <itemId>:<maxAmountCanSpawn>
-
-ChestItems:
-  Mythic: '383:1'
-  Rare: '19:1 41:1 42:2 46:2 47:2 49:4 152:1 256:1 257:1 258:1 267:1 276:1 277:1 278:1 279:1 293:1 292:1 264:3 306:1 307:1 308:1 309:1 310:1 311:1 312:1 313:1 348:16 368:3 369:1 370:1 376:2 377:1 378:1 388:3'
-  Normal: '3:32 2:4 4:32 17:12 45:6 81:6 87:12 260:2 262:16 263:12 265:6 266:4 287:12 295:5 322:2 331:16 350:10 352:8 361:5 362:5 364:10 366:10 392:5 396:3 406:16'
+##If AllBlocksOneWorld is true these values will modify determine the chance for nether or end chest loot tables to be used instead of normal loot tables
+##These values use the same logic as the spawner picking above
+##If AllBlocksOneWorld is false these values are ignored
+Chest_Prob_End: 5
+Chest_Prob_Nether: 15
 
 ## If AllBlocksOneWorld at the very top of this config is false, you'll want to edit these values to change what blocks can spawn in a normal world.
 ## The block probability values from above will still apply to these blocks. So will the chest probability values
 
 NormalConfig:
   BlockGroups:
-    Mythic: '22 41 42 57 116 133 152'
-    Unique: '9 11 46 47 52 54 56 110 129'
-    Rare: '14 21 30 35 45 49 73 86 103'
-    Uncommon: '13 15 24 48 82'
-    Abundant: '1 2 3 12 16 17'
-  ChestItems:
-    Mythic: '383:1'
-    Rare: '19:1 41:1 42:2 46:2 47:2 49:4 152:1 256:1 257:1 258:1 267:1 276:1 277:1 278:1 279:1 293:1 292:1 264:3 306:1 307:1 308:1 309:1 310:1 311:1 312:1 313:1 368:1 388:3'
-    Normal: '3:32 2:4 4:32 17:12 45:6 81:6 260:2 262:16 263:12 265:6 266:4 287:12 295:5 322:2 331:16 350:10 352:8 361:5 362:5 364:10 366:10 392:5 396:3'
+    Mythic: 'SPONGE CAULDRON CAKE TNT PISTON REDSTONE_BLOCK BLUE_ICE SEA_LANTERN LILY_PAD EMERALD_ORE LAPIS_ORE DIAMOND_ORE BUDDING_AMETHYST BOOKSHELF HAY_BLOCK PUMPKIN MOSS_BLOCK MELON MYCELIUM'
+    Unique: 'PRISMARINE GOLD_ORE REDSTONE_ORE COBWEB WHITE_WOOL BRICKS OBSIDIAN ICE SNOW_BLOCK WHITE_TERRACOTTA LAVA SPAWNER'
+    Rare: 'LIGHT_GRAY_CONCRETE CALCITE TUFF DRIPSTONE_BLOCK IRON_ORE COPPER_ORE MOSSY_COBBLESTONE CLAY WATER CHEST'
+    Uncommon: 'GLASS DEEPSLATE ANDESITE RED_SAND GRAVEL COAL_ORE SANDSTONE'
+    Abundant: 'STONE GRANITE DIORITE GRASS_BLOCK DIRT SAND OAK_LOG'
+  SpawnerOptions:
+    Mythic: 'ELDER_GUARDIAN ZOMBIE_HORSE EVOKER ILLUSIONER GUARDIAN VILLAGER'
+    Rare: 'ZOMBIE_VILLAGER VINDICATOR SILVERFISH WITCH RAVAGER'
+    Abundant: 'STRAY HUSK CREEPER SKELETON SPIDER ZOMBIE ENDERMAN CAVE_SPIDER DROWNED PILLAGER'
 
-
+## Note OAK_LOG will be replaced by the nether appropriate logs during world gen in the nether
 NetherConfig:
-  Nether_World_Name: NetherSkyGrid
   Nether_World_Height: 128
   NetherBlocks:
-    Rare: '11 13 52 54 88 155'
-    Normal: '87 87 87 87 87 87 112 113 153'
-    RareProb: 1
-  NetherChestItems:
-    Rare: '13:4 372:4 399:1 369:1 377:2 383:1 371:9 283:1 378:1 314:1 289:5 370:1'
-    Normal: '87:12 89:4 113:6 114:6 153:4 112:4 405:16 327:1 406:4 367:4 348:16'
-    RareProb: 2
-
+    Rare: 'MAGMA_BLOCK NETHER_GOLD_ORE NETHER_QUARTZ_ORE ANCIENT_DEBRIS GLOWSTONE NETHER_BRICKS CRYING_OBSIDIAN CHEST SPAWNER'
+    Normal: 'CRIMSON_NYLIUM WARPED_NYLIUM NETHERRACK SOUL_SAND SOUL_SOIL BASALT BLACKSTONE OAK_LOG'
+  SpawnerOptions:
+    Mythic: 'WITHER_SKELETON PIGLIN_BRUTE'
+    Rare: 'GHAST ZOMBIFIED_PIGLIN BLAZE ENDERMAN'
+    Abundant: 'PIGLIN HOGLIN ZOGLIN'
 
 EndConfig:
-  End_World_Name: EndSkyGrid
   End_World_Height: 128
   EndBlocks:
-    Rare: '52 54'
-    Normal: '49 121 121 121 121 121 121 121'
-    RareProb: 1
-  EndChestItems:
-    Rare: '383:1 381:1 368:1'
-    Normal: '49:4 121:16'
-    RareProb: 2
+    Rare: 'PURPUR_BLOCK CHEST SPAWNER'
+    Normal: 'END_STONE OBSIDIAN'
+  SpawnerOptions:
+    Mythic: 'SHULKER'
+    Rare: 'ENDERMAN'
+    Abundant: 'ENDERMAN'
